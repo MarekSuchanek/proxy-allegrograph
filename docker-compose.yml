@@ -1,0 +1,21 @@
+version: '3'
+services:
+
+  agraph:
+    image: franzinc/agraph:v7.0.1
+    restart: always
+    # Uncommment if you want to use AllegroGraph session ports
+    ports:
+      - 10000-10035:10000-10035
+    hostname: agraph
+    shm_size: '1gb'
+    volumes:
+      #- allegrograph-data:/agraph/data/
+      - ./allegrograph/agraph.cfg:/agraph/etc/agraph.cfg
+
+  proxy:
+    image: nginx:1.17
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx:/etc/nginx:ro
